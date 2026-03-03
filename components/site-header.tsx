@@ -12,6 +12,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  ChevronDown,
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
 const navLinks = [
@@ -19,7 +26,6 @@ const navLinks = [
   { href: "/blog", label: "Blog" },
   { href: "/#about", label: "About us" },
   { href: "/#services", label: "Services" },
-  { href: "/#events", label: "Previous Events" },
   { href: "/#about", label: "Our Profile" },
   { href: "/#contact", label: "Contact us" },
 ];
@@ -47,7 +53,38 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map(({ href, label }) => (
+          {navLinks.slice(0, 2).map(({ href, label }) => (
+            <Link
+              key={label}
+              href={href}
+              className="px-3 py-2 text-sm font-medium text-foreground/90 hover:text-primary transition-colors rounded-md hover:bg-primary/5"
+            >
+              {label}
+            </Link>
+          ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center gap-0.5 px-3 py-2 text-sm font-medium text-foreground/90 hover:text-primary transition-colors rounded-md hover:bg-primary/5"
+              >
+                Previous Events & Gallery
+                <ChevronDown className="size-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem asChild>
+                <Link href="/#events">Previous Events</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/gallery">Gallery</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/#videos">Program videos</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {navLinks.slice(2).map(({ href, label }) => (
             <Link
               key={label}
               href={href}
@@ -82,6 +119,32 @@ export function SiteHeader() {
                   {label}
                 </Link>
               ))}
+              <div className="border-t border-border pt-2 mt-2">
+                <p className="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Previous Events & Gallery
+                </p>
+                <Link
+                  href="/#events"
+                  onClick={() => setOpen(false)}
+                  className="block px-3 py-2 text-sm text-foreground rounded-md hover:bg-primary/10 hover:text-primary"
+                >
+                  Previous Events
+                </Link>
+                <Link
+                  href="/gallery"
+                  onClick={() => setOpen(false)}
+                  className="block px-3 py-2 text-sm text-foreground rounded-md hover:bg-primary/10 hover:text-primary"
+                >
+                  Gallery
+                </Link>
+                <Link
+                  href="/#videos"
+                  onClick={() => setOpen(false)}
+                  className="block px-3 py-2 text-sm text-foreground rounded-md hover:bg-primary/10 hover:text-primary"
+                >
+                  Program videos
+                </Link>
+              </div>
               <Button asChild className="mt-2" onClick={() => setOpen(false)}>
                 <Link href="/#contact">Call Now</Link>
               </Button>

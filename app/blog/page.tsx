@@ -28,7 +28,7 @@ export default async function BlogPage() {
               <p className="text-muted-foreground">No posts yet. Check back later.</p>
             ) : (
               posts.map((post) => (
-                <Link key={post._id!.toString()} href={`/blog/${post.slug}`}>
+                <Link key={post._id!.toString()} href={`/blog/${encodeURIComponent(post.slug)}`}>
                   <Card className="overflow-hidden transition-shadow hover:shadow-lg">
                     <div className="relative aspect-video w-full bg-muted">
                       <Image

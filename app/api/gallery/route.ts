@@ -37,6 +37,7 @@ export async function POST(request: Request) {
   const doc: Omit<GalleryItem, "_id"> = {
     title: body.title ?? "",
     image: body.image ?? "",
+    videoUrl: body.videoUrl ?? undefined,
     caption: body.caption ?? "",
     order: Number(body.order) ?? 0,
     createdAt: now,

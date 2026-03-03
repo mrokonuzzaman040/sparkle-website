@@ -13,6 +13,8 @@ import {
 import { SiteFooter } from "@/components/site-footer";
 import { getEvents, getGalleryForVideos } from "@/lib/data";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const [events, galleryItems] = await Promise.all([
     getEvents(),

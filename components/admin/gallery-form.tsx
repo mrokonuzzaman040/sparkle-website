@@ -13,6 +13,7 @@ type GalleryFormProps = {
     _id: string;
     title: string;
     image: string;
+    videoUrl?: string;
     caption: string;
     order: number;
   };
@@ -24,6 +25,7 @@ export function GalleryForm({ initial }: GalleryFormProps) {
   const [error, setError] = useState("");
   const [title, setTitle] = useState(initial?.title ?? "");
   const [image, setImage] = useState(initial?.image ?? "");
+  const [videoUrl, setVideoUrl] = useState(initial?.videoUrl ?? "");
   const [caption, setCaption] = useState(initial?.caption ?? "");
   const [order, setOrder] = useState(initial?.order ?? 0);
 
@@ -37,7 +39,7 @@ export function GalleryForm({ initial }: GalleryFormProps) {
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, image, caption, order }),
+        body: JSON.stringify({ title, image, videoUrl: videoUrl || undefined, caption, order }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to save");
@@ -62,8 +64,18 @@ export function GalleryForm({ initial }: GalleryFormProps) {
         />
       </div>
       <div className="space-y-2">
-        <Label>Image</Label>
+        <Label>Image (thumbnail / cover)</Label>
         <ImageUpload value={image} onChange={setImage} folder="gallery" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="videoUrl">Video URL (optional, YouTube / Vimeo / direct link)</Label>
+        <Input
+          id="videoUrl"
+          type="url"
+          value={videoUrl}
+          onChange={(e) => setVideoUrl(e.target.value)}
+          placeholder="https://youtube.com/..."
+        />
       </div>
       <div className="space-y-2">
         <Label htmlFor="caption">Caption (optional)</Label>

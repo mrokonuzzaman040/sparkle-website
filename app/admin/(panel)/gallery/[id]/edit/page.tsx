@@ -24,6 +24,7 @@ export default async function EditGalleryPage({
     _id: doc._id!.toString(),
     title: doc.title,
     image: doc.image,
+    videoUrl: doc.videoUrl ?? "",
     caption: doc.caption ?? "",
     order: doc.order,
   };

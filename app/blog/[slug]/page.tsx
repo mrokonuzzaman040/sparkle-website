@@ -1,23 +1,47 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getDb } from "@/lib/db";
-
-export const revalidate = 60;
-import { collections } from "@/lib/db";
+import { ObjectId } from "mongodb";
+import { getDb, collections } from "@/lib/db";
 import type { BlogPost } from "@/lib/types";
 import { SiteFooter } from "@/components/site-footer";
+
+export const revalidate = 60;
+
+function normalizeSlug(slug: string): string {
+  return slug
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
 
 export default async function BlogPostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const trimmed = rawSlug?.trim() ?? "";
+  const normalizedSlug = normalizeSlug(trimmed);
   const db = await getDb();
-  const post = await db
-    .collection<BlogPost>(collections.blog)
-    .findOne({ slug, published: true });
+  const coll = db.collection<BlogPost>(collections.blog);
+
+  let post: BlogPost | null = null;
+
+  if (ObjectId.isValid(trimmed) && trimmed.length === 24) {
+    post = await coll.findOne({ _id: new ObjectId(trimmed), published: true });
+  }
+  if (!post) {
+    post = await coll.findOne({
+      published: true,
+      $or: [
+        { slug: trimmed },
+        { slug: normalizedSlug },
+        { slug: rawSlug },
+      ],
+    });
+  }
   if (!post) notFound();
 
   return (

@@ -55,6 +55,7 @@ export async function PUT(
     updatedAt: now,
     ...(body.title !== undefined && { title: body.title }),
     ...(body.image !== undefined && { image: body.image }),
+    ...(body.videoUrl !== undefined && { videoUrl: body.videoUrl || undefined }),
     ...(body.caption !== undefined && { caption: body.caption }),
     ...(body.order !== undefined && { order: Number(body.order) }),
   };

@@ -18,6 +18,7 @@ const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/#about", label: "About us" },
   { href: "/#services", label: "Services" },
   { href: "/#events", label: "Events" },

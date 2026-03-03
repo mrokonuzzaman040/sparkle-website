@@ -26,6 +26,8 @@ export interface GalleryItem {
   _id?: ObjectId;
   title: string;
   image: string;
+  /** Optional video URL (YouTube, Vimeo, or direct video link) */
+  videoUrl?: string;
   caption?: string;
   order: number;
   createdAt: string;
