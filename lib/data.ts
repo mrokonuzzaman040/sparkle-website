@@ -2,10 +2,12 @@ import { getDb } from "@/lib/db";
 import { collections } from "@/lib/db";
 import type { Event } from "@/lib/types";
 import type { GalleryItem as GalleryDoc } from "@/lib/types";
+import type { EventVideo } from "@/lib/types";
 import { events as staticEvents, programVideoThumbnails } from "@/lib/home-content";
 
 export type EventItem = { name: string; image: string };
 export type GalleryDisplayItem = { image: string; title?: string; caption?: string };
+export type EventVideoItem = { _id: string; title: string; videoUrl: string; thumbnail?: string; order: number };
 
 export async function getEvents(): Promise<EventItem[]> {
   try {
@@ -36,5 +38,25 @@ export async function getGalleryForVideos(): Promise<{ image: string }[]> {
     return list.map((item) => ({ image: item.image }));
   } catch {
     return programVideoThumbnails.map((src) => ({ image: src }));
+  }
+}
+
+export async function getEventVideos(): Promise<EventVideoItem[]> {
+  try {
+    const db = await getDb();
+    const list = await db
+      .collection<EventVideo>(collections.eventVideos)
+      .find({})
+      .sort({ order: 1, createdAt: -1 })
+      .toArray();
+    return list.map((doc) => ({
+      _id: doc._id!.toString(),
+      title: doc.title,
+      videoUrl: doc.videoUrl,
+      thumbnail: doc.thumbnail,
+      order: doc.order,
+    }));
+  } catch {
+    return [];
   }
 }

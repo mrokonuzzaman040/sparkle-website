@@ -4,6 +4,7 @@ import {
   WhatWeDoSection,
   WhyUsSection,
   EventsSection,
+  EventVideosSection,
   CommitmentsSection,
   AnnouncementSection,
   HonorableClientsSection,
@@ -11,14 +12,15 @@ import {
   ContactSection,
 } from "@/components/home";
 import { SiteFooter } from "@/components/site-footer";
-import { getEvents, getGalleryForVideos } from "@/lib/data";
+import { getEvents, getGalleryForVideos, getEventVideos } from "@/lib/data";
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const [events, galleryItems] = await Promise.all([
+  const [events, galleryItems, eventVideos] = await Promise.all([
     getEvents(),
     getGalleryForVideos(),
+    getEventVideos(),
   ]);
 
   return (
@@ -29,6 +31,7 @@ export default async function Home() {
         <WhatWeDoSection />
         <WhyUsSection />
         <EventsSection events={events} />
+        <EventVideosSection items={eventVideos} />
         <CommitmentsSection />
         <AnnouncementSection />
         <HonorableClientsSection />

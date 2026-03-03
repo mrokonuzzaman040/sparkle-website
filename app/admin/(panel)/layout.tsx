@@ -7,6 +7,7 @@ import {
   FileText,
   Image,
   Calendar,
+  Video,
 } from "lucide-react";
 import { LogoutButton } from "@/components/admin/logout-button";
 
@@ -57,6 +58,16 @@ export default async function AdminPanelLayout({
             >
               <Calendar className="size-4" />
               Events
+            </Button>
+          </Link>
+          <Link href="/admin/event-videos">
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-2"
+              size="sm"
+            >
+              <Video className="size-4" />
+              Events videos
             </Button>
           </Link>
           <Link href="/admin/gallery">

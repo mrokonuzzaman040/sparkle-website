@@ -33,3 +33,15 @@ export interface GalleryItem {
   createdAt: string;
   updatedAt: string;
 }
+
+/** Event videos shown on the home page */
+export interface EventVideo {
+  _id?: ObjectId;
+  title: string;
+  videoUrl: string;
+  /** Thumbnail image URL (optional, for card display) */
+  thumbnail?: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}

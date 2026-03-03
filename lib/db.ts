@@ -26,4 +26,5 @@ export const collections = {
   blog: "blog",
   events: "events",
   gallery: "gallery",
+  eventVideos: "event_videos",
 } as const;
