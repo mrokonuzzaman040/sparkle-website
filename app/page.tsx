@@ -11,8 +11,14 @@ import {
   ContactSection,
 } from "@/components/home";
 import { SiteFooter } from "@/components/site-footer";
+import { getEvents, getGalleryForVideos } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const [events, galleryItems] = await Promise.all([
+    getEvents(),
+    getGalleryForVideos(),
+  ]);
+
   return (
     <>
       <main>
@@ -20,11 +26,11 @@ export default function Home() {
         <SparkleTaglineSection />
         <WhatWeDoSection />
         <WhyUsSection />
-        <EventsSection />
+        <EventsSection events={events} />
         <CommitmentsSection />
         <AnnouncementSection />
         <HonorableClientsSection />
-        <ProgramVideosSection />
+        <ProgramVideosSection items={galleryItems} />
         <ContactSection />
       </main>
       <SiteFooter />

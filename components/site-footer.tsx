@@ -17,10 +17,12 @@ const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
 
 const quickLinks = [
   { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
   { href: "/#about", label: "About us" },
   { href: "/#services", label: "Services" },
   { href: "/#events", label: "Events" },
   { href: "/#contact", label: "Contact" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export function SiteFooter() {

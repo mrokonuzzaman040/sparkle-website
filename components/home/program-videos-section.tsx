@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { SectionReveal } from "@/components/ui/section-reveal";
-import { programVideoThumbnails } from "@/lib/home-content";
 import { Play } from "lucide-react";
 
-export function ProgramVideosSection() {
+type VideoItem = { image: string };
+
+export function ProgramVideosSection({ items }: { items: VideoItem[] }) {
   return (
     <section
       id="videos"
@@ -29,17 +30,18 @@ export function ProgramVideosSection() {
           </p>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {programVideoThumbnails.map((src, index) => (
+          {items.map((item, index) => (
             <div
-              key={src}
+              key={item.image + index}
               className="group relative aspect-video overflow-hidden rounded-xl border border-border bg-muted shadow-lg transition-shadow hover:shadow-xl"
             >
               <Image
-                src={src}
-                alt={`Program video ${index + 1}`}
+                src={item.image}
+                alt={`Gallery ${index + 1}`}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                unoptimized={item.image.startsWith("https://res.cloudinary.com")}
               />
               <div
                 className="absolute inset-0 bg-foreground/30 transition-colors group-hover:bg-foreground/40"
@@ -51,14 +53,16 @@ export function ProgramVideosSection() {
                 </div>
               </div>
               <p className="absolute bottom-3 left-3 right-3 text-center text-sm font-medium text-white drop-shadow-md">
-                Video {index + 1} — Add your embed link
+                Gallery {index + 1}
               </p>
             </div>
           ))}
         </div>
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          Replace with YouTube or Vimeo embed when you have program videos
-        </p>
+        {items.length > 0 && (
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            Managed from the admin gallery
+          </p>
+        )}
       </SectionReveal>
     </section>
   );

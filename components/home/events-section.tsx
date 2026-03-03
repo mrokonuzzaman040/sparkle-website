@@ -4,10 +4,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Card, CardTitle } from "@/components/ui/card";
 import { StaggerReveal, StaggerItem } from "@/components/ui/section-reveal";
-import { events } from "@/lib/home-content";
 import { defaultTransition } from "@/lib/motion";
+import type { EventItem } from "@/lib/data";
 
-export function EventsSection() {
+export function EventsSection({ events }: { events: EventItem[] }) {
   return (
     <section
       id="events"
@@ -27,8 +27,8 @@ export function EventsSection() {
           </h2>
         </div>
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {events.map((event) => (
-            <StaggerItem key={event.name}>
+          {events.map((event, index) => (
+            <StaggerItem key={`${event.name}-${index}`}>
               <motion.div
                 whileHover={{ y: -6, scale: 1.02 }}
                 transition={defaultTransition}
