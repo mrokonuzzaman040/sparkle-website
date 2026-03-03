@@ -8,6 +8,7 @@ import {
   Image,
   Calendar,
   Video,
+  Settings,
 } from "lucide-react";
 import { LogoutButton } from "@/components/admin/logout-button";
 
@@ -81,6 +82,16 @@ export default async function AdminPanelLayout({
             </Button>
           </Link>
           <div className="mt-auto border-t pt-2">
+            <Link href="/admin/settings">
+              <Button
+                variant="ghost"
+                className="w-full justify-start gap-2 text-muted-foreground"
+                size="sm"
+              >
+                <Settings className="size-4" />
+                Settings
+              </Button>
+            </Link>
             <LogoutButton />
           </div>
         </nav>

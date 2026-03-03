@@ -27,4 +27,5 @@ export const collections = {
   events: "events",
   gallery: "gallery",
   eventVideos: "event_videos",
+  admin: "admin",
 } as const;
