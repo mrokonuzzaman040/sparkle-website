@@ -114,7 +114,7 @@ export const contact = {
   address: "237, West Monipur, Mirpur-2, Dhaka - 1216",
   phone1: "+88 01799-802066",
   phone2: "+88 01715-56 5353",
-  email: "team@sparkle.com.bd",
+  email: "info@sparkle.com.bd",
   whatsapp: "https://api.whatsapp.com/send/?phone=+8801799802066",
 } as const;
 
