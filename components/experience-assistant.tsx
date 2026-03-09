@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp, Wand2, Palette, Type } from "lucide-react";
 
@@ -33,6 +33,13 @@ export function ExperienceAssistant() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<ThemePreset>("signature");
   const [fontStyle, setFontStyle] = useState<FontStyle>("creative");
+  const [panelPosition, setPanelPosition] = useState<{ top: number; right: number } | null>(null);
+  const [dragBounds, setDragBounds] = useState<{ top: number; bottom: number }>({
+    top: -200,
+    bottom: 200,
+  });
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   // Back to top visibility
   useEffect(() => {
@@ -42,6 +49,21 @@ export function ExperienceAssistant() {
     handler();
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  // Constrain assistant button within viewport (vertical rail on the right)
+  useEffect(() => {
+    const updateBounds = () => {
+      const h = window.innerHeight;
+      const margin = 80; // keep some space from top & bottom
+      setDragBounds({
+        top: -h / 2 + margin,
+        bottom: h / 2 - margin,
+      });
+    };
+    updateBounds();
+    window.addEventListener("resize", updateBounds);
+    return () => window.removeEventListener("resize", updateBounds);
   }, []);
 
   // Apply theme + font styles to document
@@ -60,10 +82,49 @@ export function ExperienceAssistant() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const updatePanelPositionFromButton = () => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const right = window.innerWidth - rect.right + 8; // small gap
+    const top = rect.top;
+    setPanelPosition({ top, right });
+  };
+
+  const toggleOpen = () => {
+    setOpen((prev) => {
+      const next = !prev;
+      if (!prev && !panelPosition) {
+        // opening for first time -> align with current button position
+        updatePanelPositionFromButton();
+      }
+      return next;
+    });
+  };
+
+  // Close panel when clicking outside
+  useEffect(() => {
+    if (!open) return;
+
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [open]);
+
   return (
     <>
-      {/* Assistant toggle button */}
-      <div className="fixed right-4 bottom-4 z-[90] flex flex-col items-end gap-3 md:right-6 md:bottom-6">
+      {/* Back to top button (bottom-right) */}
+      <div className="fixed right-4 bottom-4 z-[90] md:right-6 md:bottom-6">
         <AnimatePresence>
           {showTop && (
             <motion.button
@@ -79,28 +140,42 @@ export function ExperienceAssistant() {
             </motion.button>
           )}
         </AnimatePresence>
-
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="flex h-12 items-center gap-2 rounded-full border border-primary/40 bg-background/90 px-4 text-sm font-medium text-primary shadow-xl backdrop-blur hover:bg-primary hover:text-primary-foreground"
-          aria-expanded={open}
-          aria-label="Open design assistant"
-        >
-          <Wand2 className="h-4 w-4" />
-          Design Assistant
-        </button>
       </div>
+
+      {/* Assistant toggle button (center-right, draggable, smaller) */}
+      <motion.button
+        ref={buttonRef}
+        type="button"
+        onClick={toggleOpen}
+        className="fixed right-3 top-1/2 z-[92] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-primary/50 bg-background/90 text-primary shadow-xl backdrop-blur hover:bg-primary hover:text-primary-foreground md:right-5"
+        aria-expanded={open}
+        aria-label="Open design assistant"
+        drag="y"
+        dragMomentum={false}
+        dragElastic={0.2}
+        dragConstraints={dragBounds}
+        onDragEnd={updatePanelPositionFromButton}
+      >
+        <Wand2 className="h-4 w-4" />
+      </motion.button>
 
       {/* Assistant panel */}
       <AnimatePresence>
-        {open && (
+        {open && panelPosition && (
           <motion.div
+            ref={panelRef}
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ type: "spring", stiffness: 160, damping: 18 }}
-            className="fixed right-4 bottom-20 z-[95] w-[280px] rounded-2xl border border-border bg-background/95 p-4 shadow-2xl backdrop-blur md:right-6 md:bottom-24"
+            className="fixed z-[95] w-[280px] rounded-2xl border border-border bg-background/95 p-4 shadow-2xl backdrop-blur"
+            style={{
+              top: Math.min(
+                Math.max(panelPosition.top - 80, 16),
+                window.innerHeight - 260
+              ),
+              right: panelPosition.right,
+            }}
           >
             <div className="mb-3 flex items-center gap-2">
               <Wand2 className="h-4 w-4 text-primary" />
