@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: "Sparkle Marketing Communication",
   description:
     "Event organization for government, local companies in Bangladesh, and beyond. We create events that matter.",
-  icons: { icon: "/logo.png" },
+  icons: { icon: "/favicon.png" },
 };
 
 export default function RootLayout({
