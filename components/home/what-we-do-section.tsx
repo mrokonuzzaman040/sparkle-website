@@ -51,6 +51,7 @@ export function WhatWeDoSection() {
                         alt=""
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        quality={72}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>

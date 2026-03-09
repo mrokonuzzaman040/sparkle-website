@@ -40,6 +40,7 @@ export function EventsSection({ events }: { events: EventItem[] }) {
                       alt={event.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      quality={72}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />

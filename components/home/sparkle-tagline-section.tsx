@@ -16,6 +16,7 @@ export function SparkleTaglineSection() {
           alt=""
           fill
           className="object-cover opacity-25"
+          quality={70}
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-background/70" aria-hidden />

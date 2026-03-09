@@ -62,6 +62,7 @@ export function HonorableClientsSection() {
               alt="Our clients and events"
               fill
               className="object-cover"
+              quality={75}
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-foreground/40" aria-hidden />

@@ -30,6 +30,7 @@ export function ContactSection() {
                 alt="Team collaboration"
                 fill
                 className="object-cover"
+                quality={75}
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>

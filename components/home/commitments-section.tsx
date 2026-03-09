@@ -44,7 +44,8 @@ export function CommitmentsSection() {
               alt="Our team at work"
               fill
               className="object-cover object-center"
-              sizes="100vw"
+              quality={75}
+              sizes="(min-width: 1152px) 1152px, 100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
           </div>

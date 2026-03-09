@@ -29,6 +29,7 @@ export function WhyUsSection() {
               alt="Professional event planning"
               fill
               className="object-cover"
+              quality={75}
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </motion.div>

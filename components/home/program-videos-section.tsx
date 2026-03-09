@@ -40,6 +40,7 @@ function VideoCard({ item, index }: { item: VideoItem; index: number }) {
         alt={item.title || `Gallery ${index + 1}`}
         fill
         className="object-cover transition-transform duration-300 group-hover:scale-105"
+        quality={72}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         unoptimized={item.image.startsWith("https://res.cloudinary.com")}
       />
