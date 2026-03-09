@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { heroImage } from "@/lib/home-content";
 import { fadeInUp, defaultTransition, slowTransition } from "@/lib/motion";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 const container = {
   hidden: { opacity: 0 },
@@ -78,17 +79,21 @@ export function HeroSection() {
           variants={fadeInUp}
           transition={defaultTransition}
         >
-          <Button asChild size="lg" className="shadow-lg">
-            <Link href="/#about">Learn More</Link>
-          </Button>
-          <Button
-            asChild
-            variant="secondary"
-            size="lg"
-            className="border-white/30 bg-white/10 text-white backdrop-blur hover:bg-white/20"
-          >
-            <Link href="/#contact">Contact Us</Link>
-          </Button>
+          <MagneticWrapper>
+            <Button asChild size="lg" className="shadow-lg">
+              <Link href="/#about">Learn More</Link>
+            </Button>
+          </MagneticWrapper>
+          <MagneticWrapper>
+            <Button
+              asChild
+              variant="secondary"
+              size="lg"
+              className="border-white/30 bg-white/10 text-white backdrop-blur hover:bg-white/20"
+            >
+              <Link href="/#contact">Contact Us</Link>
+            </Button>
+          </MagneticWrapper>
         </motion.div>
       </motion.div>
     </section>

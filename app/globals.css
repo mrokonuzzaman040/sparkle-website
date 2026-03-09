@@ -126,6 +126,20 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+
+  body[data-font-style="classic"] {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+  }
+
+  body[data-font-style="classic"] h1,
+  body[data-font-style="classic"] h2,
+  body[data-font-style="classic"] h3,
+  body[data-font-style="classic"] h4,
+  body[data-font-style="classic"] h5,
+  body[data-font-style="classic"] h6 {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    letter-spacing: 0.03em;
+  }
 }
 
 /* Futuristic section backgrounds */
