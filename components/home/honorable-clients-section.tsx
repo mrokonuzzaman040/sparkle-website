@@ -4,8 +4,16 @@ import Image from "next/image";
 import { SectionReveal } from "@/components/ui/section-reveal";
 import { clientsSectionImage } from "@/lib/home-content";
 
-const placeholderClients = [
-  "Gov", "Corp", "NGO", "Local", "Event", "Partner",
+const clientLogos = [
+  "/contributor/3-1.png",
+  "/contributor/4-1.png",
+  "/contributor/5-1.png",
+  "/contributor/6-1.png",
+  "/contributor/7-1.png",
+  "/contributor/8-1.png",
+  "/contributor/9-1.png",
+  "/contributor/10-1.png",
+  "/contributor/11-1.png",
 ];
 
 export function HonorableClientsSection() {
@@ -43,19 +51,24 @@ export function HonorableClientsSection() {
             <div className="absolute inset-0 bg-foreground/40" aria-hidden />
           </div>
         </div>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
-          {placeholderClients.map((label) => (
-            <div
-              key={label}
-              className="flex size-20 items-center justify-center rounded-xl border-2 border-primary/20 bg-muted/80 text-sm font-semibold text-primary shadow-sm backdrop-blur sm:size-24"
-            >
-              {label}
-            </div>
-          ))}
+        <div className="mt-16 relative flex w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+          <div className="flex w-max min-w-full animate-marquee items-center gap-6 hover:[animation-play-state:paused] pr-6">
+            {[...clientLogos, ...clientLogos].map((logoPath, index) => (
+              <div
+                key={index}
+                className="relative flex h-20 w-32 shrink-0 items-center justify-center rounded-xl border-2 border-primary/10 bg-muted/50 p-4 shadow-sm backdrop-blur sm:h-24 sm:w-40 transition-all hover:scale-105 hover:bg-primary/5 hover:border-primary/30"
+              >
+                <Image
+                  src={logoPath}
+                  alt={`Client logo ${index + 1}`}
+                  fill
+                  className="object-contain p-3 grayscale transition-all duration-300 hover:grayscale-0"
+                  sizes="(max-width: 640px) 128px, 160px"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Replace with your client logos when ready
-        </p>
       </SectionReveal>
     </section>
   );

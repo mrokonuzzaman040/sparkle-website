@@ -146,3 +146,14 @@
 .bg-glow-bottom {
   background-image: linear-gradient(to top, oklch(0.43 0.06 182 / 0.06), transparent 40%);
 }
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 4s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 12px)); } /* 12px offset for half of gap-6 (24px) */
+}
