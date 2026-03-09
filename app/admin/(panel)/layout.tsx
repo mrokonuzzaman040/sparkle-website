@@ -97,7 +97,7 @@ export default async function AdminPanelLayout({
         </nav>
       </aside>
       <main className="pl-56 min-h-screen">
-        <div className="container max-w-4xl py-8">{children}</div>
+        <div className="container max-w-6xl py-8">{children}</div>
       </main>
     </div>
   );

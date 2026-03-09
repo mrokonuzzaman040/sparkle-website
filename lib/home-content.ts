@@ -118,7 +118,7 @@ export const contact = {
   whatsapp: "https://api.whatsapp.com/send/?phone=+8801799802066",
 } as const;
 
-export const developerCredit = "VIPER Technologies BD";
+export const developerCredit = "GenAI BD LTD";
 
 export const meetWithUs = {
   heading: "Meet With Us",
