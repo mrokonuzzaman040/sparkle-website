@@ -6,7 +6,7 @@ import type { EventVideo } from "@/lib/types";
 import { events as staticEvents, programVideoThumbnails } from "@/lib/home-content";
 
 export type EventItem = { name: string; image: string };
-export type GalleryDisplayItem = { image: string; title?: string; caption?: string };
+export type GalleryDisplayItem = { image: string; title?: string; caption?: string; videoUrl?: string; _id?: string };
 export type EventVideoItem = { _id: string; title: string; videoUrl: string; thumbnail?: string; order: number };
 
 export async function getEvents(): Promise<EventItem[]> {
@@ -24,7 +24,7 @@ export async function getEvents(): Promise<EventItem[]> {
   }
 }
 
-export async function getGalleryForVideos(): Promise<{ image: string }[]> {
+export async function getGalleryForVideos(): Promise<GalleryDisplayItem[]> {
   try {
     const db = await getDb();
     const list = await db
@@ -35,9 +35,14 @@ export async function getGalleryForVideos(): Promise<{ image: string }[]> {
     if (list.length === 0) {
       return programVideoThumbnails.map((src) => ({ image: src }));
     }
-    return list.map((item) => ({ image: item.image }));
+    return list.map((item) => ({ 
+      image: item.image, 
+      videoUrl: item.videoUrl, 
+      title: item.title,
+      _id: item._id?.toString()
+    }));
   } catch {
-    return programVideoThumbnails.map((src) => ({ image: src }));
+    return programVideoThumbnails.map((src, idx) => ({ image: src, _id: `static-${idx}` }));
   }
 }
 

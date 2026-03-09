@@ -39,7 +39,7 @@ export function GalleryForm({ initial }: GalleryFormProps) {
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, image, videoUrl: videoUrl || undefined, caption, order }),
+        body: JSON.stringify({ title, image, videoUrl: videoUrl || null, caption, order }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to save");
