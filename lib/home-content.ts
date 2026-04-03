@@ -113,7 +113,7 @@ export const programVideoThumbnails = [
 
 export const contact = {
   address: "237, West Monipur, Mirpur-2, Dhaka - 1216",
-  phone1: "+88 01799-802066",
+  phone1: "+880 1675-317964",
   phone2: "+88 01715-56 5353",
   email: "info@sparkle.com.bd",
   whatsapp: "https://api.whatsapp.com/send/?phone=+8801799802066",
